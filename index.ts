@@ -1,3 +1,5 @@
+import * as path from "path";
+
 import express from 'express'
 
 import cors from 'cors'
@@ -15,6 +17,12 @@ app.use(express.urlencoded({ extended: true }))
 // db connection
 dbConnect()
 app.use(cors())
+
+//upload == public
+app.use(
+  "/uploads",
+  express.static(path.join(process.cwd(), "public"))
+);
 
 app.use('/api', routes)
 

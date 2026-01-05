@@ -8,3 +8,14 @@ export interface IAdmin extends Document {
     emailOtp?: string
     phoneOtp?: string
 }
+
+
+export interface Logos extends Document {
+    url: String,
+    public_id?: String,
+    name?: String,
+    dimensions?: {
+        width: Number,
+        height: Number
+    },
+}
