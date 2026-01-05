@@ -1,0 +1,1 @@
+export {registerAdmin , loginAdmin} from './admin/Authcontroller'
