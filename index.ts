@@ -27,7 +27,7 @@ app.use(
 app.use('/api', routes)
 
 app.get('/', (req, res) => {
-    res.send('Hello  from Qr-generator Server')
+    res.send('Hello  from visa haitiser Server')
 })
 
 // Error handling middleware (must be last)
