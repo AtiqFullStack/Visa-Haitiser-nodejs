@@ -1,5 +1,5 @@
 export const PORT =  process.env.PORT || 5001
-export const MONGO_URI =  process.env.MONGO_URI || "mongodb://localhost:27017/qr-generator"
+export const MONGO_URI =  process.env.MONGO_URI || "mongodb+srv://visahaitiser:visahaitiser@cluster0.rr2cdy1.mongodb.net/?appName=Cluster0"
 
 export const JWT_SECRET = process.env.JWT_SECRET || "secret"
 export const JWT_EXPIRE = process.env.JWT_EXPIRE || "30d"
