@@ -53,15 +53,15 @@ export const loginAdmin = asyncHandler(async (req: Request, res: Response) => {
 
 export const getAdminProfile = asyncHandler(async (req: any, res: Response) => {
     const adminId = req.user.id
-    
+
     const admin = await Admin.findById(adminId).select('-password')
-    
+
     if (!admin) {
         return res.status(404).json(
             new ApiResponse(404, null, 'Admin not found')
         )
     }
-    
+
     return res.status(200).json(
         new ApiResponse(200, admin, 'Admin profile fetched successfully')
     )
@@ -69,12 +69,34 @@ export const getAdminProfile = asyncHandler(async (req: any, res: Response) => {
 
 export const logoutAdmin = asyncHandler(async (req: any, res: Response) => {
     const token = req.header('Authorization')?.replace('Bearer ', '')
-    
+
     if (token) {
         blacklistToken(token)
     }
-    
+
     return res.status(200).json(
         new ApiResponse(200, null, 'Admin logged out successfully')
     )
+})
+
+export const changePassword = asyncHandler(async (req: Request, res: Response) => {
+    const { currentPassword, newPassword } = req.body
+    const adminId = req?.user?.id
+    const admin = await Admin.findById(adminId)
+    if (!admin) {
+      throw new Error('Admin Not found')
+    }
+    if (!admin.password) {
+       throw new Error('Admin Not found')
+    }
+    const isMatch = await passwordCompare(currentPassword, admin.password)
+    if (!isMatch) {
+       throw new Error('Invalid Credentials')
+    }
+    admin.password = await passwordHash(newPassword)
+    await admin.save()
+    return res.status(200).json(
+        new ApiResponse(200, null, 'Password changed successfully')
+    )
+
 })
