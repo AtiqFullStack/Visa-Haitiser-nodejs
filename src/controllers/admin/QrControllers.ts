@@ -1,5 +1,6 @@
 import type { Request, Response } from "express";
 import QrCode from "../../models/QrCode";
+import { ApiResponse } from "../../utils";
 
 /**
  * CREATE QR
@@ -45,6 +46,18 @@ export const getAllQRs = async (_req: Request, res: Response) => {
         });
     } catch (error: any) {
         res.status(500).json({ message: error.message });
+    }
+};
+
+/**
+ * GET ALL QRs
+ */
+export const getSingle = async (_req: Request, res: Response) => {
+    try {
+        const qrs = await QrCode.findOne({ _id: _req.params.id }).sort({ createdAt: -1 });
+        return res.status(200).json(new ApiResponse(200, qrs, 'Data fetched'))
+    } catch (error: any) {
+        throw new Error(error.message)
     }
 };
 

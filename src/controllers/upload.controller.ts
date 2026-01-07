@@ -19,6 +19,19 @@ export const uploadSingleImage = (req: Request, res: Response) => {
         },
     });
 };
+export const uploadSingleImageUser = (req: Request, res: Response) => {
+    if (!req.file) {
+        return res.status(400).json({ message: "No file uploaded" });
+    }
+
+    res.json({
+        success: true,
+        file: {
+            filename: req.file.filename,
+            path: `/uploads/logos/${req.file.filename}`,
+        },
+    });
+};
 
 export const uploadMultipleImages = (req: Request, res: Response) => {
     if (!req.files || !(req.files instanceof Array)) {

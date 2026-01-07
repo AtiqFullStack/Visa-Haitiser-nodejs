@@ -1,9 +1,9 @@
 
 export { registerAdmin, loginAdmin,changePassword } from './admin/Authcontroller'
 
-export { createQR, getAllQRs, increaseDownloadCount } from './admin/QrControllers'
+export { createQR, getAllQRs, increaseDownloadCount,getSingle } from './admin/QrControllers'
 
-export { uploadSingleImage, uploadMultipleImages, uploadLogo, getAllLogos, deleteLogo } from './upload.controller'
+export { uploadSingleImage, uploadSingleImageUser,uploadMultipleImages, uploadLogo, getAllLogos, deleteLogo } from './upload.controller'
 
 export { getDashboardStats } from './admin/dashboard.controller'
 

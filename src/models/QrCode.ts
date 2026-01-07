@@ -2,11 +2,10 @@ import mongoose, { Schema } from "mongoose";
 
 const QrCodeSchema = new Schema(
   {
-    // Actual QR Data
+    // Actual QR Data - can be string or object
     data: {
-      type: String,
+      type: mongoose.Schema.Types.Mixed,
       required: true,
-      trim: true,
     },
 
     // Full QR Styling Config (from frontend)
