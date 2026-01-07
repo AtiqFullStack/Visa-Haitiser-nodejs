@@ -38,7 +38,7 @@ export const createQR = async (req: Request, res: Response) => {
  */
 export const getAllQRs = async (_req: Request, res: Response) => {
     try {
-        const qrs = await QrCode.find({ status: "active" }).sort({ createdAt: -1 });
+        const qrs = await QrCode.find().sort({ createdAt: -1 });
 
         res.json({
             success: true,
@@ -77,3 +77,33 @@ export const increaseDownloadCount = async (req: Request, res: Response) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+/**
+ * Change Status 
+ */
+export const changeStatusOfQrCode = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    const qr = await QrCode.findById(id);
+
+    if (!qr) {
+      return res.status(404).json({ message: "QR Code not found" });
+    }
+
+    const newStatus = qr.status === "active" ? "inactive" : "active";
+
+    await QrCode.findByIdAndUpdate(id, {
+      status: newStatus,
+    });
+
+    res.json({
+      success: true,
+      status: newStatus,
+    });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+

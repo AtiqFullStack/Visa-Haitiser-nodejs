@@ -9,6 +9,9 @@ import { dbConnect } from './src/services'
 import routes from './src/routes'
 import errorHandler from './src/middlewares/errorHandler'
 
+import crypto from 'crypto';
+import { GEETEST_ID, GEETEST_KEY } from './src/utils/cofig';
+
 
 const app = express()
 app.use(express.json())
@@ -29,9 +32,83 @@ app.use('/api', routes)
 app.get('/', (req, res) => {
     res.send('Hello  from visa haitiser Server')
 })
+ 
+// ---------------------------------------------------------
+//                       Captcha
+// ---------------------------------------------------------
+
+const md5 = (str:any) => {
+  return crypto.createHash('md5').update(str).digest('hex');
+};
+
+ // register captcha 
+
+ app.get('/api/geetest/register', async (req, res) => {
+  try {
+    // Geetest API को call करें
+    const timestamp = Date.now();
+    const registerUrl = 'https://api.geetest.com/register.php';
+    
+    const params = {
+      gt: GEETEST_ID, // Your Geetest ID
+      json_format: 1,
+      sdk: 'node_3.3.0',
+      t: timestamp,
+      client_type: 'web'
+    };
+
+    console.log('Calling Geetest API with params:', params);
+
+    const response = await axios.get(registerUrl, { params });
+    
+    console.log('Geetest API response:', response.data);
+
+    if (response.data.status === 'success') {
+      const challenge = response.data.challenge;
+      
+      res.json({
+        success: 1,
+        gt: params.gt,
+        challenge: challenge,
+        offline: false, // ✅ IMPORTANT: false for interactive mode
+        new_captcha: true,
+        api_server: 'api.geetest.com'
+      });
+    } else {
+      // Fallback (should not happen for production)
+      res.json({
+        success: 1,
+        gt: params.gt,
+        challenge: md5(timestamp.toString()),
+        offline: true,
+        new_captcha: true
+      });
+    }
+    
+  } catch (error) {
+    console.error('Geetest register error:', error);
+    
+    // Fallback if API fails
+    res.json({
+      success: 1,
+      gt: GEETEST_ID,
+      challenge: md5(Date.now().toString()),
+      offline: true,
+      new_captcha: true
+    });
+  }
+});
+
+
+
+
+
 
 // Error handling middleware (must be last)
 app.use(errorHandler)
+
+
+
 
 app.listen(PORT, () => {
     console.log(`server is running on http://localhost:${PORT}`)
@@ -43,8 +120,7 @@ app.listen(PORT, () => {
 // import express from 'express';
 // import axios from 'axios';
 // import cors from 'cors';
-// import crypto from 'crypto';
-// import { GEETEST_ID, GEETEST_KEY } from './src/utils/cofig';
+
 
 // const app = express();
 
@@ -56,9 +132,7 @@ app.listen(PORT, () => {
 
 
 // // MD5 helper function
-// const md5 = (str) => {
-//   return crypto.createHash('md5').update(str).digest('hex');
-// };
+
 
 // // 1. Geetest v3 First Register API
 // // server.js में
