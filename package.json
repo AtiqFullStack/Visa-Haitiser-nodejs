@@ -26,6 +26,7 @@
     "canvas": "^3.2.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
+    "ejs": "^3.1.10",
     "express": "^5.2.1",
     "geetest": "^4.1.2",
     "image-dimensions": "^2.5.0",

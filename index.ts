@@ -1,7 +1,7 @@
 import * as path from "path";
 
 import express from 'express'
-
+import axios from 'axios'
 import cors from 'cors'
 
 import { PORT } from './src/utils/cofig'
@@ -17,6 +17,13 @@ const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
+// EJS view engine setup
+app.set('view engine', 'ejs')
+app.set('views', path.join(process.cwd(), 'src/ejs'))
+
+// Static files for CSS
+app.use('/static', express.static(path.join(process.cwd(), 'src/ejs')))
+
 // db connection
 dbConnect()
 app.use(cors())
@@ -31,6 +38,29 @@ app.use('/api', routes)
 
 app.get('/', (req, res) => {
     res.send('Hello  from visa haitiser Server')
+})
+
+// API to serve EJS template
+app.get('/api/visa-template', (req, res) => {
+    // Sample data - you can replace this with dynamic data from database
+    const visaData = {
+        placeOfIssuing: 'PORTO PRÍNCIPE',
+        visaNumber: '251127-510835',
+        entries: 'ÚNICA/SINGLE',
+        dateOfIssue: '09 DEZ/DEC 2025',
+        visaType: 'VITEM XI',
+        dateOfExpiry: '08 DEZ/DEC 2026',
+        durationOfStay: '365 DIAS/DAYS',
+        fullName: 'GREGOIRE NORMIL',
+        documentNumber: 'R12732532',
+        sex: 'M',
+        dateOfBirth: '16 SET/SET 2005',
+        nationality: 'HAITIANO',
+        issuingAuthority: 'PORTO PRÍNCIPE EMB',
+        verificationCode: 'GWZG.FQHL.6TCW.3PLF'
+    }
+    
+    res.render('pdftemplate', visaData)
 })
  
 // ---------------------------------------------------------

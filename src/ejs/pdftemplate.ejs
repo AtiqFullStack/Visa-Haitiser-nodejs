@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brazilian Electronic Visa</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+
+<body>
+  <div class="document-container">
+    <div class="document">
+      <!-- Header Section -->
+      <header class="document-header">
+        <div class="coat-of-arms">
+          <img src="https://visahaitiser.wise-hustlers.tech/backend/uploads/logos/1767850960427-959495996.png" />
+        </div>
+        <div class="header-text">
+          <h1>FEDERATIVE REPUBLIC OF BRAZIL</h1>
+          <h2>ELECTRONIC VISA</h2>
+        </div>
+      </header>
+
+      <!-- Main Content -->
+      <main class="document-content">
+        <!-- Left Column -->
+        <div class="left-column">
+          <div class="photo-placeholder">
+            <!-- <div class=""></div> -->
+            <img class="photo-frame" src="https://visahaitiser.wise-hustlers.tech/backend/uploads/logos/1767851113627-378589220.png" alt="">
+          </div>
+          <div class="belowimage">
+            <img
+            class="iamgelogounderimage"
+            src="https://visahaitiser.wise-hustlers.tech/backend/uploads/logos/1767850960427-959495996.png"
+            />
+            <div class="belowimagetext" >
+              <p>GRÁTIS</p>
+              <p class="belowimagetext2ndp">TEC 1.02.22.850.017</p>
+            </div>
+          </div>
+         
+        </div>
+
+        <!-- Right Column -->
+        <div class="right-column">
+          <div class="visa-info">
+            <div class="info-row">
+              <div class="info-group">
+                <!-- --------row 1------------ -->
+                <div class="eachrow">
+                  <div class="child1">
+                    <p class="infoheader">BRASIL/BRAZI</p>
+                  </div>
+                  <div class="child2">
+                    <p class="infoheader">VISTO/VISA</p>
+                  </div>
+                </div>
+                <!-- --------row 2------------ -->
+                <div class="eachrow">
+                  <div class="child1">
+                    <p class="infosmallheader">LOCAL DE EMISSÃO/PLACE OF ISSUING</p>
+                    <p class="infosmallabel"><%= placeOfIssuing || 'PORTO PRÍNCIPE' %></p>
+                  </div>
+                  <div class="child2">
+                    <p class="infosmallheader">Nº DO VISTO/VISA No</p>
+                    <p class="infosmallabel"><%= visaNumber || '251127-510835' %></p>
+                  </div>
+                </div>
+                <!-- --------row 3------------ -->
+                <div class="eachrow">
+                  <div class="child1">
+                    <p class="infosmallheader">Nº DE ENTRADAS/No. OF ENTRIES</p>
+                    <p class="infosmallabel"><%= entries || 'ÚNICA/SINGLE' %></p>
+                  </div>
+                  <div class="child2">
+                    <p class="infosmallheader">DATA DE EMISSÃO/DATE OF ISSUE</p>
+                    <p class="infosmallabel"><%= dateOfIssue || '09 DEZ/DEC 2025' %></p>
+                  </div>
+                </div>
+                <!-- --------row 4------------ -->
+                <div class="eachrow">
+                  <div class="child1">
+                    <p class="infosmallheader">TIPO DO VISTO/TYPE OF VISA</p>
+                    <p class="infosmallabel"><%= visaType || 'VITEM XI' %></p>
+                  </div>
+                  <div class="child2">
+                    <p class="infosmallheader">DATA DE VALIDADE/DATE OF EXPIRY</p>
+                    <p class="infosmallabel"><%= dateOfExpiry || '08 DEZ/DEC 2026' %></p>
+                  </div>
+                </div>
+                <!-- --------row 5------------ -->
+                <div class="eachrow">
+                  <div class="child1">
+                    <p class="infosmallheader">PRAZO DE ESTADA/DURATION OF STAY</p>
+                    <p class="infosmallabel"><%= durationOfStay || '365 DIAS/DAYS' %></p>
+                  </div>
+
+                </div>
+                <!-- --------row 5------------ -->
+                <div class="eachrow">
+                  <div class="child1">
+                    <p class="infosmallheader">NOME COMPLETO/FULL NAME</p>
+                    <p class="infosmallabel"><%= fullName || 'GREGOIRE NORMIL' %></p>
+                  </div>
+
+                </div>
+                <!-- --------row 6------------ -->
+                <div class="eachrow">
+                  <div class="child1">
+                    <p class="infosmallheader">DOCUMENTO Nº/TRAVEL DOC. No</p>
+                    <p class="infosmallabel"><%= documentNumber || 'R12732532' %></p>
+                  </div>
+                  <div class="child2 mt-2 " style="margin-right: 25px;">
+                    <p class="infosmallheader">EXO/SEX</p>
+                    <p class="infosmallabel"><%= sex || 'M' %></p>
+                  </div>
+                  <div class="child3  mt-2">
+                    <p class="infosmallheader">DATA DE NASCIMENTO/DATE OF BIRTH</p>
+                    <p class="infosmallabel"><%= dateOfBirth || '16 SET/SET 2005' %></p>
+                  </div>
+
+                </div>
+                <!-- --------row 7------------ -->
+                <div class="eachrow">
+                  <div class="child1">
+                    <p class="infosmallheader">NACIONALIDADE/NATIONALITY</p>
+                    <p class="infosmallabel"><%= nationality || 'HAITIANO' %></p>
+                  </div>
+                   <div class="child2 mt-2 " style="margin-right: 25px;">
+                    <p class="infosmallheader" style="visibility: hidden;">EXO/SEX</p>
+                    <p class="infosmallabel" style="visibility: hidden;"><%= sex || 'M' %></p>
+                  </div>
+                  <div class="child2">
+                    <p class="infosmallheader">AUTORIDADE EMISSORA/ISSUING AUTHORITY</p>
+                    <p class="infosmallabel"><%= issuingAuthority || 'PORTO PRÍNCIPE EMB' %></p>
+                  </div>
+
+
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="stay-info">
+            <p>  RESIDÊNCIA PRÉVIA - PORTARIAS INTERMINISTERIAIS MJSP/MRE Nº
+              38/2023 E 55/2025. PROCESSO Nº: 08228.030381/2024-67.
+              CHAMANTE: MARC NORMIL. REGISTRO JUNTO À POLÍCIA FEDERAL
+              DENTRO DE 90 (NOVENTA) DIAS DA PRIMEIRA ENTRADA NO PAÍS.</p>
+
+            </div>
+        </div>
+      </main>
+
+      <!-- Instructions Section -->
+      <section class="instructions">
+        <div class="instruction-block">
+          <h3>VISA HOLDER:</h3>
+          <p>It is <strong>advisable</strong> to print a copy of your e-Visa and carry it with you during your trip. You will not be
+            allowed to board a flight or enter Brazilian territory unless you present your visa to the Airline and
+            Border Control Agent.</p>
+        </div>
+
+        <div class="instruction-block">
+          <h3>AIRLINES AGENTS:</h3>
+          <p>Airlines must carefully verify that the personal data on this electronic visa exactly matches the
+            information displayed on the official "gov.br" verification page accessible via QR code. Boarding passengers
+            bound for Brazil without proper migratory documentation, including visas when required, constitutes an
+            administrative offense, subjecting airlines to fines per irregularly transported passenger.</p>
+        </div>
+
+        <div class="verification-section">
+          <p>To verify the authenticity of this visa, scan the QR Code or visit https://visa-haiti.serpro.gov.br/verify
+            and enter the following code:</p>
+          <div class="verification-code"><%= verificationCode || 'GWZG.FQHL.6TCW.3PLF' %></div>
+        </div>
+
+        <div class="qr-code-section">
+          <div class="qr-code-placeholder">
+            <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="100" height="100" fill="white" stroke="black" stroke-width="2" />
+              <rect x="10" y="10" width="15" height="15" fill="black" />
+              <rect x="75" y="10" width="15" height="15" fill="black" />
+              <rect x="10" y="75" width="15" height="15" fill="black" />
+              <rect x="30" y="30" width="5" height="5" fill="black" />
+              <rect x="40" y="30" width="5" height="5" fill="black" />
+              <rect x="50" y="30" width="5" height="5" fill="black" />
+              <rect x="60" y="30" width="5" height="5" fill="black" />
+              <rect x="30" y="40" width="5" height="5" fill="black" />
+              <rect x="60" y="40" width="5" height="5" fill="black" />
+              <rect x="30" y="50" width="5" height="5" fill="black" />
+              <rect x="40" y="50" width="5" height="5" fill="black" />
+              <rect x="50" y="50" width="5" height="5" fill="black" />
+              <rect x="60" y="50" width="5" height="5" fill="black" />
+              <rect x="30" y="60" width="5" height="5" fill="black" />
+              <rect x="60" y="60" width="5" height="5" fill="black" />
+            </svg>
+          </div>
+        </div>
+
+        <div class="contact-info">
+          <p>Should you have any questions, please contact us at consular.principal@itamaraty.gov.br.</p>
+        </div>
+      </section>
+    </div>
+  </div>
+</body>
+
+</html>
