@@ -90,13 +90,15 @@ router.post('/visa-pdf', async (req, res) => {
         const visaData = req.body
 
         const browser = await puppeteer.launch({
-            headless: true,
-            executablePath: '/usr/bin/chromium-browser',
+            headless: 'new',
+            executablePath: '/usr/bin/google-chrome',
             args: [
                 '--no-sandbox',
-                '--disable-setuid-sandbox'
+                '--disable-setuid-sandbox',
+                '--disable-dev-shm-usage'
             ]
         })
+
         const page = await browser.newPage()
 
         const html = await new Promise<string>((resolve, reject) => {
