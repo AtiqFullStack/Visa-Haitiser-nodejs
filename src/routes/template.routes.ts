@@ -23,7 +23,7 @@ router.get('/visa-template', (req, res) => {
         issuingAuthority: 'PORTO PRÍNCIPE EMB',
         verificationCode: 'GWZG.FQHL.6TCW.3PLF'
     }
-    
+
     res.render('pdftemplate', visaData)
 })
 
@@ -52,32 +52,32 @@ router.get('/visa-pdf', async (req, res) => {
             issuingAuthority: 'PORTO PRÍNCIPE EMB',
             verificationCode: 'GWZG.FQHL.6TCW.3PLF'
         }
-        
+
         const browser = await puppeteer.launch({ headless: true })
         const page = await browser.newPage()
-        
+
         const html = await new Promise<string>((resolve, reject) => {
             res.app.render('pdftemplate', visaData, (err: any, html: string) => {
                 if (err) reject(err)
                 else resolve(html)
             })
         })
-        
+
         await page.setContent(html, { waitUntil: 'networkidle0' })
-        
+
         const pdf = await page.pdf({
             format: 'A4',
             printBackground: true,
             preferCSSPageSize: true,
             margin: { top: '20px', bottom: '20px', left: '20px', right: '20px' }
         })
-        
+
         await browser.close()
-        
+
         res.setHeader('Content-Type', 'application/pdf')
         res.setHeader('Content-Disposition', 'attachment; filename="visa.pdf"')
         res.send(pdf)
-        
+
     } catch (error) {
         console.error('PDF generation error:', error)
         res.status(500).json({ error: 'PDF generation failed' })
@@ -88,32 +88,39 @@ router.get('/visa-pdf', async (req, res) => {
 router.post('/visa-pdf', async (req, res) => {
     try {
         const visaData = req.body
-        
-        const browser = await puppeteer.launch({ headless: true })
+
+        const browser = await puppeteer.launch({
+            headless: true,
+            executablePath: '/usr/bin/chromium-browser',
+            args: [
+                '--no-sandbox',
+                '--disable-setuid-sandbox'
+            ]
+        })
         const page = await browser.newPage()
-        
+
         const html = await new Promise<string>((resolve, reject) => {
             res.app.render('pdftemplate', visaData, (err: any, html: string) => {
                 if (err) reject(err)
                 else resolve(html)
             })
         })
-        
+
         await page.setContent(html, { waitUntil: 'networkidle0' })
-        
+
         const pdf = await page.pdf({
             format: 'A4',
             printBackground: true,
             preferCSSPageSize: true,
             margin: { top: '20px', bottom: '20px', left: '20px', right: '20px' }
         })
-        
+
         await browser.close()
-        
+
         res.setHeader('Content-Type', 'application/pdf')
         res.setHeader('Content-Disposition', 'attachment; filename="visa.pdf"')
         res.send(pdf)
-        
+
     } catch (error) {
         console.error('PDF generation error:', error)
         res.status(500).json({ error: 'PDF generation failed' })
