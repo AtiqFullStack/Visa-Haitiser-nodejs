@@ -104,14 +104,10 @@ router.post('/visa-pdf', async (req, res) => {
             headless: 'new',
             args: [
                 '--no-sandbox',
-                '--disable-setuid-sandbox',
-                '--disable-dev-shm-usage',
-                '--disable-gpu',
-                '--no-first-run',
-                '--no-zygote',
-                '--single-process'
+                '--disable-setuid-sandbox'
             ]
         })
+
 
 
 
