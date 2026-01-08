@@ -104,14 +104,18 @@ router.post('/visa-pdf', async (req, res) => {
         //     executablePath: '/usr/bin/google-chrome-stable', // या '/usr/bin/google-chrome'
         //     args: ['--no-sandbox', '--disable-setuid-sandbox'],
         // });
-        
+
         const browser = await puppeteer.launch({
             headless: 'new',
-            executablePath: '/opt/google/chrome/google-chrome', // ← This is the actual Chrome binary
+            executablePath: '/opt/google/chrome/chrome', // ← This is the actual Chrome binary
             args: ['--no-sandbox', '--disable-setuid-sandbox'],
         });
 
-
+// const browser = await puppeteer.launch({
+//   headless: 'new',
+//   executablePath: '/opt/google/chrome/chrome', // यह actual binary है
+//   args: ['--no-sandbox', '--disable-setuid-sandbox'],
+// });
 
 
 
