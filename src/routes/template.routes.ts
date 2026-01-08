@@ -53,7 +53,18 @@ router.get('/visa-pdf', async (req, res) => {
             verificationCode: 'GWZG.FQHL.6TCW.3PLF'
         }
 
-        const browser = await puppeteer.launch({ headless: true })
+        const browser = await puppeteer.launch({
+            headless: 'new',
+            args: [
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+                '--disable-dev-shm-usage',
+                '--disable-gpu',
+                '--no-first-run',
+                '--no-zygote',
+                '--single-process'
+            ]
+        })
         const page = await browser.newPage()
 
         const html = await new Promise<string>((resolve, reject) => {
@@ -94,7 +105,11 @@ router.post('/visa-pdf', async (req, res) => {
             args: [
                 '--no-sandbox',
                 '--disable-setuid-sandbox',
-                '--disable-dev-shm-usage'
+                '--disable-dev-shm-usage',
+                '--disable-gpu',
+                '--no-first-run',
+                '--no-zygote',
+                '--single-process'
             ]
         })
 
