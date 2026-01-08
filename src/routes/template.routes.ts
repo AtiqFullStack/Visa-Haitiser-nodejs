@@ -99,9 +99,15 @@ router.get('/visa-pdf', async (req, res) => {
 router.post('/visa-pdf', async (req, res) => {
     try {
         const visaData = req.body
+        // const browser = await puppeteer.launch({
+        //     headless: 'new',
+        //     executablePath: '/usr/bin/google-chrome-stable', // या '/usr/bin/google-chrome'
+        //     args: ['--no-sandbox', '--disable-setuid-sandbox'],
+        // });
+        
         const browser = await puppeteer.launch({
             headless: 'new',
-            executablePath: '/usr/bin/google-chrome-stable', // या '/usr/bin/google-chrome'
+            executablePath: '/opt/google/chrome/google-chrome', // ← This is the actual Chrome binary
             args: ['--no-sandbox', '--disable-setuid-sandbox'],
         });
 
