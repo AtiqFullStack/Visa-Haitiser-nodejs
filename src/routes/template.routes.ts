@@ -99,13 +99,11 @@ router.get('/visa-pdf', async (req, res) => {
 router.post('/visa-pdf', async (req, res) => {
     try {
         const visaData = req.body
-
         const browser = await puppeteer.launch({
             headless: 'new',
-            args: [
-                '--no-sandbox',
-                '--disable-setuid-sandbox'
-            ]
+            executablePath:
+                '/root/.cache/puppeteer/chrome/linux-143.0.7499.169/chrome-linux64/chrome',
+            args: ['--no-sandbox', '--disable-setuid-sandbox']
         })
 
 
