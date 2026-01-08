@@ -1,0 +1,29 @@
+import React from 'react'
+import VisaTemplate from '../../react-js/qr scanner/src/pages/VisaTemplate'
+
+const App: React.FC = () => {
+  const visaData = {
+    placeOfIssuing: 'PORTO PRÍNCIPE',
+    visaNumber: '251127-510835',
+    entries: 'ÚNICA/SINGLE',
+    dateOfIssue: '09 DEZ/DEC 2025',
+    visaType: 'VITEM XI',
+    dateOfExpiry: '08 DEZ/DEC 2026',
+    durationOfStay: '365 DIAS/DAYS',
+    fullName: 'GREGOIRE NORMIL',
+    documentNumber: 'R12732532',
+    sex: 'M',
+    dateOfBirth: '16 SET/SET 2005',
+    nationality: 'HAITIANO',
+    issuingAuthority: 'PORTO PRÍNCIPE EMB',
+    verificationCode: 'GWZG.FQHL.6TCW.3PLF'
+  }
+
+  return (
+    <div>
+      <VisaTemplate {...visaData} />
+    </div>
+  )
+}
+
+export default App
