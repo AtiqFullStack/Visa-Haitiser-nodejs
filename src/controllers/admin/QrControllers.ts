@@ -106,4 +106,17 @@ export const changeStatusOfQrCode = async (req: Request, res: Response) => {
   }
 };
 
+export const deleteQrCode = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+
+        const data=await QrCode.findByIdAndDelete(id);
+        return res.status(200).json(
+        new ApiResponse(200, data, 'QR Code deleted successfully')
+    )
+    } catch (error: any) {
+           throw new Error(error)
+    }
+};
+
 
