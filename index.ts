@@ -37,7 +37,7 @@ app.use(
 app.use('/api', routes)
 
 app.get('/', (req, res) => {
-    res.send('Hello  from visa haitiser Server')
+    res.render('index')
 })
 
 // API to serve EJS template
