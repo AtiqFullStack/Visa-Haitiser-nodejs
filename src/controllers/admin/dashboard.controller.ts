@@ -11,7 +11,7 @@ export const getDashboardStats = asyncHandler(async (req: Request, res: Response
     const totalLogos = await LogosSchema.countDocuments()
     
     // Get active QRs count
-    const activeQRs = await QrSchema.countDocuments({ isActive: true })
+    const activeQRs = await QrSchema.countDocuments({ staus: "status" })
     
     // Get recent QRs (last 7 days)
     const sevenDaysAgo = new Date()
