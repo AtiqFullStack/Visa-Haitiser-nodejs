@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 import QrCode from "../../models/QrCode";
-import { ApiResponse } from "../../utils";
+import { ApiResponse, asyncHandler } from "../../utils";
 
 /**
  * CREATE QR
@@ -82,41 +82,71 @@ export const increaseDownloadCount = async (req: Request, res: Response) => {
  * Change Status 
  */
 export const changeStatusOfQrCode = async (req: Request, res: Response) => {
-  try {
-    const { id } = req.params;
+    try {
+        const { id } = req.params;
 
-    const qr = await QrCode.findById(id);
+        const qr = await QrCode.findById(id);
 
-    if (!qr) {
-      return res.status(404).json({ message: "QR Code not found" });
+        if (!qr) {
+            return res.status(404).json({ message: "QR Code not found" });
+        }
+
+        const newStatus = qr.status === "active" ? "inactive" : "active";
+
+        await QrCode.findByIdAndUpdate(id, {
+            status: newStatus,
+        });
+
+        res.json({
+            success: true,
+            status: newStatus,
+        });
+    } catch (error: any) {
+        res.status(500).json({ message: error.message });
     }
-
-    const newStatus = qr.status === "active" ? "inactive" : "active";
-
-    await QrCode.findByIdAndUpdate(id, {
-      status: newStatus,
-    });
-
-    res.json({
-      success: true,
-      status: newStatus,
-    });
-  } catch (error: any) {
-    res.status(500).json({ message: error.message });
-  }
 };
 
 export const deleteQrCode = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
 
-        const data=await QrCode.findByIdAndDelete(id);
+        const data = await QrCode.findByIdAndDelete(id);
         return res.status(200).json(
-        new ApiResponse(200, data, 'QR Code deleted successfully')
-    )
+            new ApiResponse(200, data, 'QR Code deleted successfully')
+        )
     } catch (error: any) {
-           throw new Error(error)
+        throw new Error(error)
     }
 };
+
+
+export const verifyAuthenticity = asyncHandler(async (req: Request, res: Response) => {
+    const { applicationNumber, code } = req.body;
+
+    if (!applicationNumber || !code) {
+        return res.status(400).json({
+            success: false,
+            status: 400,
+            message: "Please provide application number and code"
+        })
+    }
+
+    const isValid = await QrCode.findOne({
+        "data.visaNumber": applicationNumber,
+        "data.verificationCode": code
+    });
+
+    if (!isValid) {
+        return res.status(400).json({
+            success: false,
+            status: 400,
+            message: "Document not found"
+        })
+    }
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, isValid, "Document found"));
+});
 
 
