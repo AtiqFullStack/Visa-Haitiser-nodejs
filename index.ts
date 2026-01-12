@@ -11,6 +11,7 @@ import errorHandler from './src/middlewares/errorHandler'
 
 import crypto from 'crypto';
 import { GEETEST_ID, GEETEST_KEY } from './src/utils/cofig';
+import puppeteer from "puppeteer";
 
 
 const app = express()
@@ -39,6 +40,44 @@ app.use('/api', routes)
 app.get('/', (req, res) => {
     res.render('index')
 })
+
+app.post('/generate-pdf', async (req, res) => {
+  console.log('api called')
+  try {
+    const { html, options = {} } = req.body;
+
+    if (!html) {
+      return res.status(400).json({ error: 'HTML content is required' });
+    }
+
+    const browser = await puppeteer.launch({
+      headless: true,
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage', // Helps with low memory environments
+        '--disable-gpu' // Can help in some headless environments
+      ]
+    });
+    const page = await browser.newPage();
+
+    await page.setContent(html);
+    const pdf = await page.pdf({
+      format: 'A4',
+      printBackground: true,
+      ...options
+    });
+
+    await browser.close();
+
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'attachment; filename="generated.pdf"');
+    res.send(pdf);
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ error: 'PDF generation failed', err: error });
+  }
+});
 
 // API to serve EJS template
 app.get('/api/visa-template', (req, res) => {
