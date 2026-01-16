@@ -1,27 +1,12 @@
   {
     "name": "qr-scanner",
-    "module": "index.ts",
-    "type": "module",
+    "main": "index.js",
     "private": true,
     "scripts": {
-      "dev": "bun run --watch index.ts",
-      "build": "bun build --compile src/index.ts",
-      "start": "node index.ts"
-    },
-    "devDependencies": {
-      "@types/bcrypt": "^6.0.0",
-      "@types/bun": "latest",
-      "@types/express": "^5.0.6"
-    },
-    "peerDependencies": {
-      "typescript": "^5"
+      "dev": "nodemon index.js",
+      "start": "node index.js"
     },
     "dependencies": {
-      "@types/cors": "^2.8.19",
-      "@types/jsdom": "^27.0.0",
-      "@types/jsonwebtoken": "^9.0.10",
-      "@types/multer": "^2.0.0",
-      "@types/puppeteer": "^7.0.4",
       "axios": "^1.13.2",
       "bcrypt": "^6.0.0",
       "canvas": "^3.2.0",
