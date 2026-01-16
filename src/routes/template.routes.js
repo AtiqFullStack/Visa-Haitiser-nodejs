@@ -96,7 +96,7 @@ router.post('/visa-pdf', async (req, res) => {
 
         const browser = await puppeteer.launch({
             headless: 'new',
-            executablePath: '/opt/google/chrome/chrome',
+            // executablePath: '/opt/google/chrome/chrome',
             args: ['--no-sandbox', '--disable-setuid-sandbox'],
         });
 
