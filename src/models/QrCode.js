@@ -1,8 +1,12 @@
 const mongoose = require('mongoose');
+const { generateTokenOfQr } = require('../utils');
 const { Schema } = mongoose;
 
 const QrCodeSchema = new Schema(
   {
+    token: {
+      type: String
+    },
     data: {
       type: mongoose.Schema.Types.Mixed,
       required: true,
@@ -34,3 +38,9 @@ const QrCodeSchema = new Schema(
 );
 
 module.exports = mongoose.model("QrCode", QrCodeSchema);
+
+QrCodeSchema.pre('save', function (next) {
+  if (!this.token) {
+    this.token = generateTokenOfQr();
+  }
+});

@@ -6,7 +6,8 @@ const {
     getSingle,
     changeStatusOfQrCode,
     deleteQrCode,
-    verifyAuthenticity
+    verifyAuthenticity,
+    getQrWithToken
 } = require('./admin/QrControllers');
 const { uploadSingleImage, uploadSingleImageUser, uploadMultipleImages, uploadLogo, getAllLogos, deleteLogo } = require('./upload.controller');
 const { getDashboardStats } = require('./admin/dashboard.controller');
@@ -40,5 +41,6 @@ module.exports = {
     getAllTemplates,
     getTemplateById,
     deleteTemplate,
-    updateTemplate
+    updateTemplate,
+    getQrWithToken
 };

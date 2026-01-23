@@ -1,20 +1,23 @@
 const QrCode = require('../../models/QrCode');
-const { ApiResponse, asyncHandler } = require('../../utils');
+const { ApiResponse, asyncHandler, generateTokenOfQr } = require('../../utils');
 
 const createQR = async (req, res) => {
     try {
         const { data, options } = req.body;
+
 
         if (!data || !options) {
             return res.status(400).json({
                 message: "QR data and options are required",
             });
         }
+        const token = generateTokenOfQr()
 
         const qr = await QrCode.create({
             data,
             options,
             createdBy: req.user?.id,
+            token: token
         });
 
         res.status(201).json({
@@ -28,6 +31,22 @@ const createQR = async (req, res) => {
         });
     }
 };
+
+const getQrWithToken = asyncHandler(async (req, res) => {
+    const { token } = req.query
+    if (!token) {
+        throw new Error('No Data Found')
+    }
+    const data = await QrCode.findOne({ token })
+    if (!data) throw new Error('No Data Found')
+    if (data) {
+
+        res.status(200).json(
+            new ApiResponse(200, data, 'Data found')
+        )
+    }
+
+})
 
 const getAllQRs = async (_req, res) => {
     try {
@@ -139,5 +158,6 @@ module.exports = {
     getSingle,
     changeStatusOfQrCode,
     deleteQrCode,
-    verifyAuthenticity
+    verifyAuthenticity,
+    getQrWithToken
 };
