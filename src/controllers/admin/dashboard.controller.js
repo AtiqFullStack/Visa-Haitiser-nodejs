@@ -9,18 +9,18 @@ const getDashboardStats = asyncHandler(async (req, res) => {
     const totalQRs = await QrSchema.countDocuments()
     const totalTemplates = await TemplateSchema.countDocuments()
     const totalLogos = await LogosSchema.countDocuments()
-    
+
     // Get active QRs count
     const activeQRs = await QrSchema.countDocuments({ status: "active" })
     console.log(activeQRs)
-    
+
     // Get recent QRs (last 7 days)
     const sevenDaysAgo = new Date()
     sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7)
-    const recentQRs = await QrSchema.countDocuments({ 
-        createdAt: { $gte: sevenDaysAgo } 
+    const recentQRs = await QrSchema.countDocuments({
+        createdAt: { $gte: sevenDaysAgo }
     })
-    
+
     // Get total downloads
     const downloadStats = await QrSchema.aggregate([
         {
@@ -30,13 +30,13 @@ const getDashboardStats = asyncHandler(async (req, res) => {
             }
         }
     ])
-    
+
     const totalDownloads = downloadStats.length > 0 ? downloadStats[0].totalDownloads : 0
-    
+
     // Get QR generation trend (last 30 days)
     const thirtyDaysAgo = new Date()
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)
-    
+
     const qrTrend = await QrSchema.aggregate([
         {
             $match: {
@@ -55,10 +55,17 @@ const getDashboardStats = asyncHandler(async (req, res) => {
             }
         },
         {
-            $sort: { _id: 1 }
+            $sort: { _id: -1 }   // latest dates first
+        },
+        {
+            $limit: 6
+        },
+        {
+            $sort: { _id: 1 }    // optional: chart ke liye wapas ascending
         }
-    ])
-    
+    ]);
+
+
     // Get template usage stats
     const templateUsage = await QrSchema.aggregate([
         {
@@ -91,7 +98,7 @@ const getDashboardStats = asyncHandler(async (req, res) => {
             $limit: 5
         }
     ])
-    
+
     const dashboardData = {
         stats: {
             totalQRs,
@@ -106,7 +113,7 @@ const getDashboardStats = asyncHandler(async (req, res) => {
             templateUsage
         }
     }
-    
+
     return res.status(200).json(
         new ApiResponse(200, dashboardData, "Dashboard stats retrieved successfully")
     )
