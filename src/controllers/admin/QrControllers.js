@@ -151,6 +151,29 @@ const verifyAuthenticity = asyncHandler(async (req, res) => {
         .json(new ApiResponse(200, isValid, "Document found"));
 });
 
+const updateQRsWithoutToken = async (req, res) => {
+    try {
+        const qrsWithoutToken = await QrCode.find({ token: { $exists: false } });
+        // console.log(qrsWithoutToken.length)
+        // return 
+        
+        for (const qr of qrsWithoutToken) {
+            const token = generateTokenOfQr();
+            await QrCode.findByIdAndUpdate(qr._id, { token });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: `Updated ${qrsWithoutToken.length} QR codes with tokens`,
+            count: qrsWithoutToken.length
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: error.message,
+        });
+    }
+};
+
 module.exports = {
     createQR,
     getAllQRs,
@@ -159,5 +182,6 @@ module.exports = {
     changeStatusOfQrCode,
     deleteQrCode,
     verifyAuthenticity,
-    getQrWithToken
+    getQrWithToken,
+    updateQRsWithoutToken
 };

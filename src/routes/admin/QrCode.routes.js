@@ -1,13 +1,14 @@
 
 const express = require('express');
 const authMiddleware = require('../../middlewares/authMiddleware');
-const { changeStatusOfQrCode, createQR, deleteQrCode, getAllQRs, getSingle, increaseDownloadCount, verifyAuthenticity, getQrWithToken } = require('../../controllers');
+const { changeStatusOfQrCode, createQR, deleteQrCode, getAllQRs, getSingle, increaseDownloadCount, verifyAuthenticity, getQrWithToken, updateQRsWithoutToken } = require('../../controllers');
 
 const router = express.Router()
 
 
 router.post('/create', authMiddleware, createQR)
 router.get('/get/qrdata', getQrWithToken)
+router.patch('/upadatetoken', updateQRsWithoutToken)
 router.get('/getAll', authMiddleware, getAllQRs)
 router.get('/get/:id', getSingle)
 router.post('/increaseDownloadCount/:id', authMiddleware, increaseDownloadCount)
