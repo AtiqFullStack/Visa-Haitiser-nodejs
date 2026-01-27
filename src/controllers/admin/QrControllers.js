@@ -122,34 +122,98 @@ const deleteQrCode = async (req, res) => {
     }
 };
 
+// =============================== with special character =========================================
+
+// const verifyAuthenticity = asyncHandler(async (req, res) => {
+//     const { applicationNumber, code } = req.body;
+//     console.log(applicationNumber,code)
+
+//     if (!applicationNumber || !code) {
+//         return res.status(400).json({
+//             success: false,
+//             status: 400,
+//             message: "Please provide application number and code"
+//         });
+//     }
+
+//     const isValid = await QrCode.findOne({
+//         "data.visaNumber": applicationNumber,
+//         "data.verificationCode": code
+//     });
+
+//     if (!isValid) {
+//         return res.status(400).json({
+//             success: false,
+//             status: 400,
+//             message: "Document not found"
+//         });
+//     }
+
+//     return res
+//         .status(200)
+//         .json(new ApiResponse(200, isValid, "Document found"));
+// });
+
+
+// =============================== without special character =========================================
 const verifyAuthenticity = asyncHandler(async (req, res) => {
-    const { applicationNumber, code } = req.body;
+  const { applicationNumber, code } = req.body;
 
-    if (!applicationNumber || !code) {
-        return res.status(400).json({
-            success: false,
-            status: 400,
-            message: "Please provide application number and code"
-        });
-    }
-
-    const isValid = await QrCode.findOne({
-        "data.visaNumber": applicationNumber,
-        "data.verificationCode": code
+  if (!applicationNumber || !code) {
+    return res.status(400).json({
+      success: false,
+      status: 400,
+      message: "Please provide application number and code",
     });
+  }
 
-    if (!isValid) {
-        return res.status(400).json({
-            success: false,
-            status: 400,
-            message: "Document not found"
-        });
-    }
+  const cleanCode = code.replace(/[^a-zA-Z0-9]/g, "").toUpperCase();
 
-    return res
-        .status(200)
-        .json(new ApiResponse(200, isValid, "Document found"));
+  const result = await QrCode.aggregate([
+    {
+      $match: {
+        "data.visaNumber": applicationNumber,
+      },
+    },
+    {
+      $addFields: {
+        normalizedDbCode: {
+          $toUpper: {
+            $replaceAll: {
+              input: {
+                $replaceAll: {
+                  input: "$data.verificationCode",
+                  find: ".",
+                  replacement: "",
+                },
+              },
+              find: "-",
+              replacement: "",
+            },
+          },
+        },
+      },
+    },
+    {
+      $match: {
+        normalizedDbCode: cleanCode,
+      },
+    },
+  ]);
+
+  if (!result.length) {
+    return res.status(400).json({
+      success: false,
+      status: 400,
+      message: "Document not found",
+    });
+  }
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, result[0], "Document found"));
 });
+
 
 const updateQRsWithoutToken = async (req, res) => {
     try {
