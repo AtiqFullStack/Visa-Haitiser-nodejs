@@ -27,6 +27,27 @@
       print-color-adjust: exact;
     }
 
+    @font-face {
+      font-family: 'DejaVuSans';
+      src: url('/absolute/path/to/fonts/DejaVuSans.ttf') format('truetype');
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    body,
+    .pdf-root {
+      font-family: 'DejaVuSans', sans-serif;
+      font-size: 15px;
+      line-height: 1.35;
+      letter-spacing: 0;
+      word-spacing: 0;
+      white-space: normal;
+      word-break: normal;
+      overflow-wrap: break-word;
+      hyphens: none;
+    }
+
+
     img {
       image-rendering: auto;
     }
