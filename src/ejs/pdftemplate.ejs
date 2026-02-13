@@ -2,16 +2,17 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Brazilian Electronic Visa</title>
+
   <style>
     :root {
-      --logoHeight: 70px;
-      --mainHeadercolor: #2F2B5F;
-      --mainsubHeadercolor: #25438A;
-      --infoheadcolor: #1A308E;
-      --samllheadercolor: #6391d2;
+      --logoHeight: 85px;
+      --mainHeadercolor: #24345C;
+      --mainsubHeadercolor: #24345C;
+      --infoheadcolor: #24345C;
+      --samllheadercolor: #24345C;
       --underimagelogo: 50px
     }
 
@@ -21,19 +22,55 @@
       box-sizing: border-box;
     }
 
+    * {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    img {
+      image-rendering: auto;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      background-color: white;
-      padding: 0;
-      line-height: 1.4;
-      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
 
     .document-container {
+      letter-spacing: 0.01em;
+      word-spacing: 0.02em;
       max-width: 100%;
       margin: 0;
       background-color: white;
       box-shadow: none;
+
+    }
+
+    .header-text h1,
+    .header-text h2,
+    .eachrow .infoheader {
+      letter-spacing: 0.03em;
+      word-spacing: 0.04em;
+    }
+
+    .belowimagetext,
+    .eachrow .infosmallheader,
+    .visa-info,
+    .contact-info p {
+      letter-spacing: 0.02em;
+      word-spacing: 0.03em;
+    }
+
+    .eachrow .infosmallabel,
+    .stay-info p,
+    .instruction-block p,
+    .verification-section p {
+      letter-spacing: 0.015em;
+      word-spacing: 0.025em;
+    }
+
+    .verification-code {
+      letter-spacing: 0.15em;
+      word-spacing: 0.2em;
     }
 
     .document {
@@ -43,9 +80,10 @@
     .document-header {
       display: flex;
       align-items: center;
-      margin-bottom: 30px;
-      padding-bottom: 25px;
-      border-bottom: 2px solid #000000;
+      margin-bottom: 20px;
+      padding-bottom: 45px;
+      padding-top: 15px;
+      border-bottom: 2px solid #aaa9a9;
     }
 
     .coat-of-arms {
@@ -57,21 +95,27 @@
     }
 
     .header-text h1 {
-      font-size: 16px;
-      font-weight: bold;
+      font-size: 18.5px;
+      font-weight: 600;
       color: var(--mainHeadercolor);
     }
 
     .header-text h2 {
-      font-size: 14px;
+      font-size: 16.5px;
       font-weight: normal;
       color: var(--mainsubHeadercolor);
+      margin-top: 8px;
     }
 
     .document-content {
       display: flex;
-      gap: 5%;
+      gap: 3%;
       margin-bottom: 30px;
+      margin-top: 45px;
+    }
+
+    .child3 {
+      /* border: 1px solid blue; */
     }
 
     .left-column {
@@ -90,23 +134,24 @@
     }
 
     .belowimagetext {
-      font-size: 7px;
+      font-size: 9.5px;
       color: var(--infoheadcolor);
       padding-top: 5%;
     }
 
     .belowimagetext2ndp {
-      margin-top: 20%;
+      margin-top: 10%;
     }
 
     .right-column {
-      width: 70%;
+      width: 75%;
     }
 
     .photo-placeholder {
       width: 100%;
       display: grid;
       place-items: center;
+      margin-top: 15px;
     }
 
     .photo-frame {
@@ -116,7 +161,7 @@
     }
 
     .visa-info {
-      font-size: 11px;
+      font-size: 13.5px;
       line-height: 1.3;
       width: 100%;
     }
@@ -144,18 +189,22 @@
 
     .eachrow .infoheader {
       font-weight: 500;
-      font-size: 13px;
+      font-size: 16.5px;
       color: var(--infoheadcolor);
       line-height: 15px;
     }
 
     .eachrow .infosmallheader {
-      font-size: 7px;
+      font-size: 10.5px;
       color: var(--samllheadercolor);
+      margin-top: 3.5px;
+      margin-bottom: 1px;
     }
 
     .eachrow .infosmallabel {
-      font-size: 13px;
+      margin-top: -6px;
+      font-size: 15.5px;
+      color: #111111;
     }
 
     .stay-info {
@@ -163,24 +212,26 @@
     }
 
     .stay-info p {
-      font-size: 13px;
+      font-size: 15.5px;
     }
 
     .instruction-block {
       margin-bottom: 15px;
+      margin-top: 25px;
     }
 
     .instruction-block h3 {
-      font-size: 17px;
+      font-size: 19.5px;
       font-weight: normal;
       color: #000;
     }
 
     .instruction-block p {
-      font-size: 15px;
+      font-size: 18px;
       color: #000;
       text-align: justify;
-      line-height: 1.4;
+      line-height: 1.5;
+
     }
 
     .verification-section {
@@ -188,19 +239,19 @@
     }
 
     .verification-section p {
-      font-size: 15px;
+      font-size: 17.5px;
       color: #000;
       text-align: justify;
       line-height: 1.4;
-
     }
 
     .verification-code {
-      font-size: 14px;
+      font-size: 16.5px;
       font-weight: bold;
       color: #000;
       letter-spacing: 2px;
       margin: 10px 0;
+      margin-top: 35px;
       text-align: center;
     }
 
@@ -210,18 +261,31 @@
       margin: 20px 0;
     }
 
-    .qr-code-placeholder {
-      border: 1px solid #000;
+    .qr-code-section img {
+      width: 200px;
+      height: 200px;
     }
 
     .contact-info {
       margin-top: 15px;
-      text-align: center;
+      text-align: flex-start;
     }
 
     .contact-info p {
-      font-size: 10px;
+      font-size: 12.5px;
       color: #000;
+    }
+
+    .imagescontainersright {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      max-height: 80%;
+    }
+
+    .imgesrightside {
+      height: var(--logoHeight);
+      margin-bottom: 30px;
     }
   </style>
 </head>
@@ -232,8 +296,13 @@
       <!-- Header Section -->
       <header class="document-header">
         <div class="coat-of-arms">
-          <img src="https://visahaitiser.wise-hustlers.tech/backend/uploads/logos/1767850960427-959495996.png" />
+          <% if (data.logoImage) { %>
+            <img src="<%= data.logoImage %>" alt="Logo" />
+            <% } else { %>
+              <img src="https://visa-haiti-serpro-gov-br.info/backend/uploads/logos/small%20(1).svg" alt="logo" />
+              <% } %>
         </div>
+
         <div class="header-text">
           <h1>FEDERATIVE REPUBLIC OF BRAZIL</h1>
           <h2>ELECTRONIC VISA</h2>
@@ -245,191 +314,236 @@
         <!-- Left Column -->
         <div class="left-column">
           <div class="photo-placeholder">
-            <!-- <div class=""></div> -->
-            <img class="photo-frame"
-              src="https://visahaitiser.wise-hustlers.tech/backend/uploads/logos/1767851113627-378589220.png" alt="">
-          </div>
-          <div class="belowimage">
-            <img class="iamgelogounderimage"
-              src="https://visahaitiser.wise-hustlers.tech/backend/uploads/logos/1767850960427-959495996.png" />
-            <div class="belowimagetext">
-              <p>GRÁTIS</p>
-              <p class="belowimagetext2ndp">TEC 1.02.22.850.017</p>
-            </div>
+            <% if (data.profileImage) { %>
+              <img class="photo-frame" src="<%= data.profileImage %>" alt="Profile" />
+              <% } else { %>
+                <img class="photo-frame"
+                  src="https://visa-haiti-serpro-gov-br.info/backend/uploads/logos/1770964926326-221320471.jpeg"
+                  alt="Photo" />
+                <% } %>
           </div>
 
+          <div class="belowimage">
+            <% if (data.logoImage) { %>
+              <img class="iamgelogounderimage" src="<%= data.logoImage %>" alt="Logo" />
+              <% } else { %>
+                <img class="iamgelogounderimage"
+                  src="https://visa-haiti-serpro-gov-br.info/backend/uploads/logos/small%20(1).svg" alt="Logo" />
+                <% } %>
+
+                  <div class="belowimagetext">
+                    <p>GRÁTIS</p>
+                    <p class="belowimagetext2ndp">TEC 1.02.22.850.017</p>
+                  </div>
+          </div>
         </div>
 
         <!-- Right Column -->
         <div class="right-column">
           <div class="visa-info">
-            <div class="info-row">
-              <div class="info-group">
-                <!-- --------row 1------------ -->
-                <div class="eachrow">
-                  <div class="child1">
-                    <p class="infoheader">BRASIL/BRAZI</p>
-                  </div>
-                  <div class="child2">
-                    <p class="infoheader">VISTO/VISA</p>
-                  </div>
-                </div>
-                <!-- --------row 2------------ -->
-                <div class="eachrow">
-                  <div class="child1">
-                    <p class="infosmallheader">LOCAL DE EMISSÃO/PLACE OF ISSUING</p>
-                    <p class="infosmallabel">
-                      <%= placeOfIssuing || 'PORTO PRÍNCIPE' %>
-                    </p>
-                  </div>
-                  <div class="child2">
-                    <p class="infosmallheader">Nº DO VISTO/VISA No</p>
-                    <p class="infosmallabel">
-                      <%= visaNumber || '251127-510835' %>
-                    </p>
-                  </div>
-                </div>
-                <!-- --------row 3------------ -->
-                <div class="eachrow">
-                  <div class="child1">
-                    <p class="infosmallheader">Nº DE ENTRADAS/No. OF ENTRIES</p>
-                    <p class="infosmallabel">
-                      <%= entries || 'ÚNICA/SINGLE' %>
-                    </p>
-                  </div>
-                  <div class="child2">
-                    <p class="infosmallheader">DATA DE EMISSÃO/DATE OF ISSUE</p>
-                    <p class="infosmallabel">
-                      <%= dateOfIssue || '09 DEZ/DEC 2025' %>
-                    </p>
-                  </div>
-                </div>
-                <!-- --------row 4------------ -->
-                <div class="eachrow">
-                  <div class="child1">
-                    <p class="infosmallheader">TIPO DO VISTO/TYPE OF VISA</p>
-                    <p class="infosmallabel">
-                      <%= visaType || 'VITEM XI' %>
-                    </p>
-                  </div>
-                  <div class="child2">
-                    <p class="infosmallheader">DATA DE VALIDADE/DATE OF EXPIRY</p>
-                    <p class="infosmallabel">
-                      <%= dateOfExpiry || '08 DEZ/DEC 2026' %>
-                    </p>
-                  </div>
-                </div>
-                <!-- --------row 5------------ -->
-                <div class="eachrow">
-                  <div class="child1">
-                    <p class="infosmallheader">PRAZO DE ESTADA/DURATION OF STAY</p>
-                    <p class="infosmallabel">
-                      <%= durationOfStay || '365 DIAS/DAYS' %>
-                    </p>
-                  </div>
-
-                </div>
-                <!-- --------row 5------------ -->
-                <div class="eachrow">
-                  <div class="child1">
-                    <p class="infosmallheader">NOME COMPLETO/FULL NAME</p>
-                    <p class="infosmallabel">
-                      <%= fullName || 'GREGOIRE NORMIL' %>
-                    </p>
-                  </div>
-
-                </div>
-                <!-- --------row 6------------ -->
-                <div class="eachrow">
-                  <div class="child1">
-                    <p class="infosmallheader">DOCUMENTO Nº/TRAVEL DOC. No</p>
-                    <p class="infosmallabel">
-                      <%= documentNumber || 'R12732532' %>
-                    </p>
-                  </div>
-                  <div class="child2 mt-2 " style="margin-right: 25px;">
-                    <p class="infosmallheader">EXO/SEX</p>
-                    <p class="infosmallabel">
-                      <%= sex || 'M' %>
-                    </p>
-                  </div>
-                  <div class="child3  mt-2">
-                    <p class="infosmallheader">DATA DE NASCIMENTO/DATE OF BIRTH</p>
-                    <p class="infosmallabel">
-                      <%= dateOfBirth || '16 SET/SET 2005' %>
-                    </p>
-                  </div>
-
-                </div>
-                <!-- --------row 7------------ -->
-                <div class="eachrow">
-                  <div class="child1">
-                    <p class="infosmallheader">NACIONALIDADE/NATIONALITY</p>
-                    <p class="infosmallabel">
-                      <%= nationality || 'HAITIANO' %>
-                    </p>
-                  </div>
-                  <div class="child2 mt-2 " style="margin-right: 25px;">
-                    <p class="infosmallheader" style="visibility: hidden;">EXO/SEX</p>
-                    <p class="infosmallabel" style="visibility: hidden;">
-                      <%= sex || 'M' %>
-                    </p>
-                  </div>
-                  <div class="child2">
-                    <p class="infosmallheader">AUTORIDADE EMISSORA/ISSUING AUTHORITY</p>
-                    <p class="infosmallabel">
-                      <%= issuingAuthority || 'PORTO PRÍNCIPE EMB' %>
-                    </p>
-                  </div>
-
-
-                </div>
-
+            <!-- Row 1 -->
+            <div class="eachrow">
+              <div class="child1">
+                <p class="infoheader">BRASIL/BRAZIL</p>
               </div>
-
+              <div class="child2">
+                <p class="infoheader">VISTO/VISA</p>
+              </div>
             </div>
 
-            <div class="stay-info">
-              <p> RESIDÊNCIA PRÉVIA - PORTARIAS INTERMINISTERIAIS MJSP/MRE Nº
-                38/2023 E 55/2025. PROCESSO Nº: 08228.030381/2024-67.
-                CHAMANTE: MARC NORMIL. REGISTRO JUNTO À POLÍCIA FEDERAL
-                DENTRO DE 90 (NOVENTA) DIAS DA PRIMEIRA ENTRADA NO PAÍS.</p>
+            <!-- Row 2 -->
+            <div class="eachrow">
+              <div class="child1">
+                <p class="infosmallheader">LOCAL DE EMISSÃO/PLACE OF ISSUING</p>
+                <p class="infosmallabel">
+                  <%= data.placeOfIssuing || 'PORTO PRÍNCIPE' %>
+                </p>
+              </div>
+              <div class="child2">
+                <p class="infosmallheader">Nº DO VISTO/VISA No</p>
+                <p class="infosmallabel">
+                  <%= data.visaNumber || '251127-510835' %>
+                </p>
+              </div>
+            </div>
 
+            <!-- Row 3 -->
+            <div class="eachrow">
+              <div class="child1">
+                <p class="infosmallheader">Nº DE ENTRADAS/No. OF ENTRIES</p>
+                <p class="infosmallabel">
+                  <%= data.entries || 'ÚNICA/SINGLE' %>
+                </p>
+              </div>
+              <div class="child2">
+                <p class="infosmallheader">DATA DE EMISSÃO/DATE OF ISSUE</p>
+                <p class="infosmallabel">
+                  <%= data.issueDate || '09 DEZ/DEC 2025' %>
+                </p>
+              </div>
+            </div>
+
+            <!-- Row 4 -->
+            <div class="eachrow">
+              <div class="child1">
+                <p class="infosmallheader">TIPO DO VISTO/TYPE OF VISA</p>
+                <p class="infosmallabel">
+                  <%= data.visaType || 'VITEM XI' %>
+                </p>
+              </div>
+              <div class="child2">
+                <p class="infosmallheader">DATA DE VALIDADE/DATE OF EXPIRY</p>
+                <p class="infosmallabel">
+                  <%= data.expiryDate || '08 DEZ/DEC 2026' %>
+                </p>
+              </div>
+            </div>
+
+            <!-- Row 5 -->
+            <div class="eachrow">
+              <div class="child1">
+                <p class="infosmallheader">PRAZO DE ESTADA/DURATION OF STAY</p>
+                <p class="infosmallabel">
+                  <%= data.durationOfStay || '365 DIAS/DAYS' %>
+                </p>
+              </div>
+            </div>
+
+            <!-- Row 6 -->
+            <div class="eachrow">
+              <div class="child1">
+                <p class="infosmallheader">NOME COMPLETO/FULL NAME</p>
+                <p class="infosmallabel">
+                  <%= data.fullName || 'GREGOIRE NORMIL' %>
+                </p>
+              </div>
+            </div>
+
+            <!-- Row 7 -->
+            <div class="eachrow">
+              <div class="child1">
+                <p class="infosmallheader">DOCUMENTO Nº/TRAVEL DOC. No</p>
+                <p class="infosmallabel">
+                  <%= data.documentNumber || 'R12732532' %>
+                </p>
+              </div>
+              <div class="child2">
+                <p class="infosmallheader" style="margin-right: 25px;">SEXO / SEX</p>
+                <p class="infosmallabel">
+                  <%= data.sex || 'M' %>
+                </p>
+              </div>
+              <div class="child3">
+                <p class="infosmallheader">DATA DE NASCIMENTO/DATE OF BIRTH</p>
+                <p class="infosmallabel">
+                  <%= data.dateOfBirth || '16 SET/SET 2005' %>
+                </p>
+              </div>
+            </div>
+
+            <!-- Row 8 -->
+            <div class="eachrow">
+              <div class="child1">
+                <p class="infosmallheader">NACIONALIDADE/NATIONALITY</p>
+                <p class="infosmallabel">
+                  <%= data.nationality || 'HAITIANO' %>
+                </p>
+              </div>
+              <div class="child2">
+                <p class="infosmallheader" style="visibility:hidden;">SEXO/SEX</p>
+                <p class="infosmallabel" style="visibility:hidden;">
+                  <%= data.sex || 'M' %>
+                </p>
+              </div>
+              <div class="child2" style=" width: 310px; margin-left: 40px;">
+                <p class="infosmallheader">AUTORIDADE EMISSORA/ISSUING AUTHORITY</p>
+                <p class="infosmallabel">
+                  <%= data.issuingAuthority || 'PORTO PRÍNCIPE EMB' %>
+                </p>
+              </div>
+            </div>
+
+            <!-- Paragraph -->
+            <div class="stay-info">
+              <% if (data.info) { %>
+                <p class="dynamic-info">
+                  <%= data.info %>
+                </p>
+                <% } else { %>
+                  <p>
+                    RESIDÊNCIA &nbsp; PRÉVIA &nbsp;-&nbsp; PORTARIAS&nbsp; INTERMINISTERIAIS &nbsp; MJSP/MRE &nbsp; Nº
+                    <br />
+                    38/2023 E &nbsp; 55/2025. &nbsp; PROCESSO Nº: &nbsp;<%= data.processNumber || '08228.030381/2024-67'
+                      %>.
+                      <br />
+                      CHAMANTE: &nbsp; MARC NORMIL. &nbsp;REGISTRO &nbsp; JUNTO &nbsp; À &nbsp; POLÍCIA &nbsp; FEDERAL
+                      DENTRO &nbsp;DE &nbsp; 90 (NOVENTA)&nbsp; DIAS &nbsp; DA&nbsp; PRIMEIRA&nbsp; ENTRADA &nbsp;NO
+                      &nbsp;PAÍS.
+                  </p>
+                  <% } %>
+
+                    <% if (data.customFields && data.customFields.length> 0) { %>
+                      <div style="margin-top: 8px;">
+                        <% data.customFields.forEach(function(field) { %>
+                          <p style="font-size: 11px; margin-bottom: 4px;">
+                            <strong>
+                              <%= field.key %>:
+                            </strong>
+                            <%= field.value %>
+                          </p>
+                          <% }); %>
+                      </div>
+                      <% } %>
             </div>
           </div>
+        </div>
+
+        <% if (data.showrightIcons !==false) { %>
+          <div class="imagescontainersright">
+            <img src="https://visahaitiser.wise-hustlers.tech/backend/uploads/hand-icon.png" alt=""
+              class="imgesrightside" />
+            <img src="https://visahaitiser.wise-hustlers.tech/backend/uploads/icon128x128.jpg" alt=""
+              class="imgesrightside" />
+          </div>
+          <% } %>
       </main>
 
       <!-- Instructions Section -->
       <section class="instructions">
         <div class="instruction-block">
           <h3>VISA HOLDER:</h3>
-          <p>It is <strong>advisable</strong> to print a copy of your e-Visa and carry it with you during your trip. You
-            will not be
-            allowed to board a flight or enter Brazilian territory unless you present your visa to the Airline and
-            Border Control Agent.</p>
+          <p>
+            It is <strong>advisable</strong> to print a copy of your e-Visa and carry it with you during your trip.
+            You will not be allowed to
+          <p>board a flight or enter Brazilian territory unless you present your visa to the
+            Airline and Border Control <br> Agent.</p>
+          </p>
         </div>
 
         <div class="instruction-block">
           <h3>AIRLINES AGENTS:</h3>
-          <p>Airlines must carefully verify that the personal data on this electronic visa exactly matches the
+          <p>
+            Airlines must carefully verify that the personal data on this electronic visa exactly matches the
             information displayed on the official "gov.br" verification page accessible via QR code. Boarding passengers
             bound for Brazil without proper migratory documentation, including visas when required, constitutes an
-            administrative offense, subjecting airlines to fines per irregularly transported passenger.</p>
+            administrative offense, subjecting airlines to fines per irregularly transported passenger.
+          </p>
         </div>
 
         <div class="verification-section">
-          <p>To verify the authenticity of this visa, scan the QR Code or visit https://visa-haiti.serpro.gov.br/verify
-            and enter the following code:</p>
+          <p>
+            To verify the authenticity of this visa, scan the QR Code or visit https://visa-haiti.serpro.gov.br/verify
+            and <br> enter the following code:
+          </p>
           <div class="verification-code">
-            <%= verificationCode || 'GWZG.FQHL.6TCW.3PLF' %>
+            <%= data.verificationCode || 'GWZG.FQHL.6TCW.3PLF' %>
           </div>
         </div>
 
         <div class="qr-code-section">
-          <div class="qr-code-placeholder">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlLJhCvRCbIyJhVn80yh7fNhPers_jWnWkcA&s"
-              alt="">
-          </div>
+          <% if (data.qrCode) { %>
+            <img src="<%= data.qrCode %>" alt="QR Code" style="" />
+            <% } %>
         </div>
 
         <div class="contact-info">

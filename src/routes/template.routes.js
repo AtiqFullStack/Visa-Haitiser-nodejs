@@ -18,15 +18,16 @@ router.get('/visa-template', (req, res) => {
         dateOfBirth: '16 SET/SET 2005',
         nationality: 'HAITIANO',
         issuingAuthority: 'PORTO PRÍNCIPE EMB',
-        verificationCode: 'GWZG.FQHL.6TCW.3PLF'
+        verificationCode: 'GWZG.FQHL.6TCW.3PLF',
+        qrCode:"https://www.drupal.org/files/styles/grid-3-2x/public/project-images/qrcode-module_0.png?itok=ZVIdRXkv"
     };
 
-    res.render('pdftemplate', visaData);
+    res.render('pdftemplate', { data: visaData });
 });
 
 router.post('/visa-template', (req, res) => {
     const visaData = req.body;
-    res.render('pdftemplate', visaData);
+    res.render('pdftemplate', { data: visaData });
 });
 
 router.get('/visa-pdf', async (req, res) => {
@@ -45,7 +46,9 @@ router.get('/visa-pdf', async (req, res) => {
             dateOfBirth: '16 SET/SET 2005',
             nationality: 'HAITIANO',
             issuingAuthority: 'PORTO PRÍNCIPE EMB',
-            verificationCode: 'GWZG.FQHL.6TCW.3PLF'
+            verificationCode: 'GWZG.FQHL.6TCW.3PLF',
+            logoImage:"https://visa-haiti-serpro-gov-br.info/backend/uploads/logos/newl.png",
+            qrCode:"https://www.drupal.org/files/styles/grid-3-2x/public/project-images/qrcode-module_0.png?itok=ZVIdRXkv"
         };
 
         const browser = await puppeteer.launch({
@@ -63,7 +66,7 @@ router.get('/visa-pdf', async (req, res) => {
         const page = await browser.newPage();
 
         const html = await new Promise((resolve, reject) => {
-            res.app.render('pdftemplate', visaData, (err, html) => {
+            res.app.render('pdftemplate', { data: visaData }, (err, html) => {
                 if (err) reject(err);
                 else resolve(html);
             });
@@ -74,8 +77,9 @@ router.get('/visa-pdf', async (req, res) => {
         const pdf = await page.pdf({
             format: 'A4',
             printBackground: true,
-            preferCSSPageSize: true,
-            margin: { top: '20px', bottom: '20px', left: '20px', right: '20px' }
+            preferCSSPageSize: false,
+            scale: 0.8,
+            margin: { top: '10px', bottom: '10px', left: '15px', right: '15px' }
         });
 
         await browser.close();
@@ -96,14 +100,13 @@ router.post('/visa-pdf', async (req, res) => {
 
         const browser = await puppeteer.launch({
             headless: 'new',
-            // executablePath: '/opt/google/chrome/chrome',
             args: ['--no-sandbox', '--disable-setuid-sandbox'],
         });
 
         const page = await browser.newPage();
 
         const html = await new Promise((resolve, reject) => {
-            res.app.render('pdftemplate', visaData, (err, html) => {
+            res.app.render('pdftemplate', { data: visaData }, (err, html) => {
                 if (err) reject(err);
                 else resolve(html);
             });
@@ -114,8 +117,9 @@ router.post('/visa-pdf', async (req, res) => {
         const pdf = await page.pdf({
             format: 'A4',
             printBackground: true,
-            preferCSSPageSize: true,
-            margin: { top: '20px', bottom: '20px', left: '20px', right: '20px' }
+            preferCSSPageSize: false,
+            scale: 0.8,
+            margin: { top: '10px', bottom: '10px', left: '15px', right: '15px' }
         });
 
         await browser.close();

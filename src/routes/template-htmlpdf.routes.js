@@ -22,7 +22,7 @@ router.get('/visa-template', (req, res) => {
         issuingAuthority: 'PORTO PRÍNCIPE EMB',
         verificationCode: 'GWZG.FQHL.6TCW.3PLF'
     }
-    res.render('pdftemplate', visaData)
+    res.render('pdftemplate', { data: visaData })
 })
 
 // API to generate PDF with html-pdf
@@ -46,7 +46,7 @@ router.get('/visa-pdf', async (req, res) => {
         }
 
         const html = await new Promise((resolve, reject) => {
-            res.app.render('pdftemplate', visaData, (err, html) => {
+            res.app.render('pdftemplate', { data: visaData }, (err, html) => {
                 if (err) reject(err)
                 else resolve(html)
             })
