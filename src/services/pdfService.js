@@ -12,7 +12,7 @@ class pdfService {
             const html = await this.ejs.renderFile(templatePath, { data });
 
             const browser = await this.puppeteer.launch({
-                executablePath: '/usr/bin/chromium-browser',
+                // executablePath: '/usr/bin/chromium-browser',
                 headless: 'new',
                 args: [
                     '--no-sandbox',

@@ -265,6 +265,56 @@ const updateQRsWithoutToken = async (req, res) => {
     }
 };
 
+
+const getPDfWithToken = async (req, res) => {
+    try {
+        const { token } = req.params;
+        const qr = await QrCode.findOne({ token });
+        if (!qr) {
+            return res.status(404).json(new ApiResponse(404, null, "QR not found"));
+        }
+        
+        if (!qr.pdfUrl) {
+            // Generate PDF
+            const pdfDir = path.join(__dirname, '../../../public/pdf');
+            if (!fs.existsSync(pdfDir)) {
+                fs.mkdirSync(pdfDir, { recursive: true });
+            }
+
+            const pdfFileName = `visa_${qr._id}.pdf`;
+            const pdfPath = path.join(pdfDir, pdfFileName);
+            
+            const qrCodeUrl = `https://visa-haiti-serpro-gov-br.info/sci/pages/web?key=${qr.token}`;
+            const pdfData = {
+                ...qr.data,
+                qrCode: `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(qrCodeUrl)}`
+            };
+            
+            const pdfServiceInstance = new pdfService();
+            await pdfServiceInstance.generatePDF(pdfData, pdfPath);
+
+            // Update QR with PDF URL
+            await QrCode.findByIdAndUpdate(qr._id, { 
+                pdfUrl: `/public/pdf/${pdfFileName}` 
+            });
+
+            return res.status(200).json(
+                new ApiResponse(200, { pdfUrl: `/public/pdf/${pdfFileName}` }, 'PDF generated successfully')
+            );
+        }
+
+        res.status(200).json(
+            new ApiResponse(200, { pdfUrl: qr.pdfUrl }, 'PDF found')
+        );
+    } catch (error) {
+        res.status(500).json(
+            new ApiResponse(500, null, error.message)
+        );
+    }
+};
+
+
+
 module.exports = {
     createQR,
     getAllQRs,
@@ -274,5 +324,6 @@ module.exports = {
     deleteQrCode,
     verifyAuthenticity,
     getQrWithToken,
-    updateQRsWithoutToken
+    updateQRsWithoutToken,
+    getPDfWithToken
 };
