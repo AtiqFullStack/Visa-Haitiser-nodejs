@@ -266,6 +266,8 @@
       color: #000;
       text-align: justify;
       line-height: 1.4;
+      word-spacing: -0.5px;
+      letter-spacing: -0.3px;
     }
 
     .verification-code {
@@ -555,7 +557,7 @@
         <div class="verification-section">
           <p>
             To verify the authenticity of this visa, scan the QR Code or visit https://visa-haiti.serpro.gov.br/verify
-            and <br> enter the following code:
+            and  enter the following code:
           </p>
           <div class="verification-code">
             <%= data.verificationCode || 'GWZG.FQHL.6TCW.3PLF' %>
