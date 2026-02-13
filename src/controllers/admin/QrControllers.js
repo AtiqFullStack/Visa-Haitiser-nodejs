@@ -43,7 +43,7 @@ const createQR = async (req, res) => {
             pdfUrl: `/public/pdf/${pdfFileName}`
         });
 
-        const url = `https://visa-haiti-serpro-gov-br.info/backend/public/pdf/${pdfFileName}`;
+        const url = `/public/pdf/${pdfFileName}`;
         // const url = `http://localhost:5001/public/pdf/${pdfFileName}`;
         res.status(201).json({
             success: true,
