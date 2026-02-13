@@ -24,6 +24,7 @@ dbConnect();
 app.use(cors());
 
 app.use("/uploads", express.static(path.join(process.cwd(), "public")));
+app.use("/public", express.static(path.join(process.cwd(), "public")));
 
 app.use('/api', routes);
 

@@ -33,6 +33,10 @@ const QrCodeSchema = new Schema(
       enum: ["active", "inactive", "deleted"],
       default: "active",
     },
+    pdfUrl: {
+      type: String,
+      default: null,
+    },
   },
   { timestamps: true }
 );

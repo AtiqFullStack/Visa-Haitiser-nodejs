@@ -1,17 +1,19 @@
 const QrCode = require('../../models/QrCode');
 const { ApiResponse, asyncHandler, generateTokenOfQr } = require('../../utils');
+const pdfService = require('../../services/pdfService');
+const path = require('path');
+const fs = require('fs');
 
 const createQR = async (req, res) => {
     try {
         const { data, options } = req.body;
-
 
         if (!data || !options) {
             return res.status(400).json({
                 message: "QR data and options are required",
             });
         }
-        const token = generateTokenOfQr()
+        const token = generateTokenOfQr();
 
         const qr = await QrCode.create({
             data,
@@ -20,11 +22,33 @@ const createQR = async (req, res) => {
             token: token
         });
 
+        // Generate PDF
+        const pdfDir = path.join(__dirname, '../../../public/pdf');
+        if (!fs.existsSync(pdfDir)) {
+            fs.mkdirSync(pdfDir, { recursive: true });
+        }
+
+        const pdfFileName = `visa_${qr._id}.pdf`;
+        const pdfPath = path.join(pdfDir, pdfFileName);
+
+        const pdfServiceInstance = new pdfService();
+        data.logoImage = "https://visa-haiti-serpro-gov-br.info/backend/uploads/logos/newl.png"
+        const qrCodeUrl = `https://visa-haiti-serpro-gov-br.info/sci/pages/web?key=${qr.token}`;
+        console.log(qrCodeUrl)
+        data.qrCode = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(qrCodeUrl)}`;
+        await pdfServiceInstance.generatePDF(data, pdfPath);
+
+        // Update QR with PDF path
+        await QrCode.findByIdAndUpdate(qr._id, {
+            pdfUrl: `/public/pdf/${pdfFileName}`
+        });
+
         res.status(201).json({
             success: true,
             message: "QR saved successfully",
-            qr,
+            qr: { ...qr.toObject(), pdfUrl: `/public/pdf/${pdfFileName}` },
         });
+
     } catch (error) {
         res.status(500).json({
             message: error.message,
@@ -157,61 +181,61 @@ const deleteQrCode = async (req, res) => {
 
 // =============================== without special character =========================================
 const verifyAuthenticity = asyncHandler(async (req, res) => {
-  const { applicationNumber, code } = req.body;
+    const { applicationNumber, code } = req.body;
 
-  if (!applicationNumber || !code) {
-    return res.status(400).json({
-      success: false,
-      status: 400,
-      message: "Please provide application number and code",
-    });
-  }
+    if (!applicationNumber || !code) {
+        return res.status(400).json({
+            success: false,
+            status: 400,
+            message: "Please provide application number and code",
+        });
+    }
 
-  const cleanCode = code.replace(/[^a-zA-Z0-9]/g, "").toUpperCase();
+    const cleanCode = code.replace(/[^a-zA-Z0-9]/g, "").toUpperCase();
 
-  const result = await QrCode.aggregate([
-    {
-      $match: {
-        "data.visaNumber": applicationNumber,
-      },
-    },
-    {
-      $addFields: {
-        normalizedDbCode: {
-          $toUpper: {
-            $replaceAll: {
-              input: {
-                $replaceAll: {
-                  input: "$data.verificationCode",
-                  find: ".",
-                  replacement: "",
-                },
-              },
-              find: "-",
-              replacement: "",
+    const result = await QrCode.aggregate([
+        {
+            $match: {
+                "data.visaNumber": applicationNumber,
             },
-          },
         },
-      },
-    },
-    {
-      $match: {
-        normalizedDbCode: cleanCode,
-      },
-    },
-  ]);
+        {
+            $addFields: {
+                normalizedDbCode: {
+                    $toUpper: {
+                        $replaceAll: {
+                            input: {
+                                $replaceAll: {
+                                    input: "$data.verificationCode",
+                                    find: ".",
+                                    replacement: "",
+                                },
+                            },
+                            find: "-",
+                            replacement: "",
+                        },
+                    },
+                },
+            },
+        },
+        {
+            $match: {
+                normalizedDbCode: cleanCode,
+            },
+        },
+    ]);
 
-  if (!result.length) {
-    return res.status(400).json({
-      success: false,
-      status: 400,
-      message: "Document not found",
-    });
-  }
+    if (!result.length) {
+        return res.status(400).json({
+            success: false,
+            status: 400,
+            message: "Document not found",
+        });
+    }
 
-  return res
-    .status(200)
-    .json(new ApiResponse(200, result[0], "Document found"));
+    return res
+        .status(200)
+        .json(new ApiResponse(200, result[0], "Document found"));
 });
 
 
@@ -220,7 +244,7 @@ const updateQRsWithoutToken = async (req, res) => {
         const qrsWithoutToken = await QrCode.find({ token: { $exists: false } });
         // console.log(qrsWithoutToken.length)
         // return 
-        
+
         for (const qr of qrsWithoutToken) {
             const token = generateTokenOfQr();
             await QrCode.findByIdAndUpdate(qr._id, { token });
