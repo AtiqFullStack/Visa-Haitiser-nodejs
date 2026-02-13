@@ -11,13 +11,19 @@ class pdfService {
             const templatePath = this.path.join(__dirname, '../ejs/pdftemplate.ejs');
             const html = await this.ejs.renderFile(templatePath, { data });
 
-            const browser = await this.puppeteer.launch({ 
-                headless: true,
-                args: ['--no-sandbox', '--disable-setuid-sandbox']
+            const browser = await puppeteer.launch({
+                executablePath: '/usr/bin/chromium-browser',
+                headless: 'new',
+                args: [
+                    '--no-sandbox',
+                    '--disable-setuid-sandbox',
+                    '--disable-dev-shm-usage'
+                ]
             });
+
             const page = await browser.newPage();
             await page.setContent(html, { waitUntil: 'networkidle0' });
-            const buffer = await page.pdf({ 
+            const buffer = await page.pdf({
                 format: 'A4',
                 printBackground: true,
                 preferCSSPageSize: false,
