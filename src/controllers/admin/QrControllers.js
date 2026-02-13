@@ -43,10 +43,11 @@ const createQR = async (req, res) => {
             pdfUrl: `/public/pdf/${pdfFileName}`
         });
 
+        const url = `http://localhost:5001/public/pdf/${pdfFileName}`;
         res.status(201).json({
             success: true,
             message: "QR saved successfully",
-            qr: { ...qr.toObject(), pdfUrl: `/public/pdf/${pdfFileName}` },
+            qr: { ...qr.toObject(), pdfUrl: url },
         });
 
     } catch (error) {
