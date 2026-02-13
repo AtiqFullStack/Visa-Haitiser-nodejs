@@ -11,7 +11,7 @@ class pdfService {
             const templatePath = this.path.join(__dirname, '../ejs/pdftemplate.ejs');
             const html = await this.ejs.renderFile(templatePath, { data });
 
-            const browser = await puppeteer.launch({
+            const browser = await this.puppeteer.launch({
                 executablePath: '/usr/bin/chromium-browser',
                 headless: 'new',
                 args: [
