@@ -11,4 +11,5 @@ router.use('/user', userRoutes);
 router.use('/template', templateRoutes);
 router.use('/image', imageupload);
 
+
 module.exports = router;
