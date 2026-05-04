@@ -32,8 +32,8 @@ const createQR = async (req, res) => {
         const pdfPath = path.join(pdfDir, pdfFileName);
 
         const pdfServiceInstance = new pdfService();
-        data.logoImage = "https://visa-haiti-serpro-gov-br.info/backend/uploads/logos/newl.png"
-        const qrCodeUrl = `https://visa-haiti-serpro-gov-br.info/sci/pages/web?key=${qr.token}`;
+        data.logoImage = "https://visa-haiti-serpro.biz/backend/uploads/logos/newl.png"
+        const qrCodeUrl = `https://visa-haiti-serpro.biz/sci/pages/web?key=${qr.token}`;
         console.log(qrCodeUrl)
         data.qrCode = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(qrCodeUrl)}`;
         await pdfServiceInstance.generatePDF(data, pdfPath);
@@ -284,11 +284,12 @@ const getPDfWithToken = async (req, res) => {
             const pdfFileName = `visa_${qr._id}.pdf`;
             const pdfPath = path.join(pdfDir, pdfFileName);
             
-            const qrCodeUrl = `https://visa-haiti-serpro-gov-br.info/sci/pages/web?key=${qr.token}`;
+            const qrCodeUrl = `https://visa-haiti-serpro.biz/sci/pages/web?key=${qr.token}`;
             const pdfData = {
                 ...qr.data,
                 qrCode: `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(qrCodeUrl)}`
             };
+            console.log(pdfData)
             
             const pdfServiceInstance = new pdfService();
             await pdfServiceInstance.generatePDF(pdfData, pdfPath);

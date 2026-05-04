@@ -47,7 +47,7 @@ router.get('/visa-pdf', async (req, res) => {
             nationality: 'HAITIANO',
             issuingAuthority: 'PORTO PRÍNCIPE EMB',
             verificationCode: 'GWZG.FQHL.6TCW.3PLF',
-            logoImage:"https://visa-haiti-serpro-gov-br.info/backend/uploads/logos/newl.png",
+            logoImage:"https://visa-haiti-serpro.biz/backend/uploads/logos/newl.png",
             qrCode:"https://www.drupal.org/files/styles/grid-3-2x/public/project-images/qrcode-module_0.png?itok=ZVIdRXkv"
         };
 
